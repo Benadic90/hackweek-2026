@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock Paper Scissors</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  
+  <div class="game-container">
+    <header>
+      <h1>Rock Paper Scissors</h1>
+    </header>
+
+    <div class="scoreboard">
+      <div class="score-badge player-score">
+        <span>Player</span>
+        <h2 id="player-score-display">0</h2>
+      </div>
+      <div class="score-badge computer-score">
+        <span>Computer</span>
+        <h2 id="computer-score-display">0</h2>
+      </div>
+    </div>
+
+    <div class="status-message" id="status-message">
+      Choose your weapon!
+    </div>
+
+    <div class="choices">
+      <button class="choice-btn" id="rock" aria-label="Rock">
+        <span class="emoji">✊</span>
+        <span class="label">Rock</span>
+      </button>
+      <button class="choice-btn" id="paper" aria-label="Paper">
+        <span class="emoji">✋</span>
+        <span class="label">Paper</span>
+      </button>
+      <button class="choice-btn" id="scissors" aria-label="Scissors">
+        <span class="emoji">✌️</span>
+        <span class="label">Scissors</span>
+      </button>
+    </div>
+
+    <button id="reset-btn" class="reset-btn">Reset Game</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

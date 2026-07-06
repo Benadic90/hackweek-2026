@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DJ Soundboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  
+  <div class="app-container">
+    <header>
+      <h1>Soundboard</h1>
+      
+      <div class="controls">
+        <div class="volume-control">
+          <label for="volume">Volume</label>
+          <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
+        </div>
+        <button id="stop-btn" class="stop-btn">Stop All Sounds</button>
+      </div>
+    </header>
+
+    <div class="pad-grid" id="pad-grid">
+      <!-- Pads injected via JS -->
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban Board</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <header>
+      <h1>Kanban Board</h1>
+    </header>
+    
+    <main class="board">
+      
+      <div class="column" data-status="todo">
+        <div class="column-header">
+          <h2>To Do</h2>
+          <span class="card-count" id="count-todo">0</span>
+        </div>
+        <div class="card-list" id="todo-list"></div>
+        <button class="add-card-btn" onclick="openModal('todo')">+ Add a card</button>
+      </div>
+
+      <div class="column" data-status="in-progress">
+        <div class="column-header">
+          <h2>In Progress</h2>
+          <span class="card-count" id="count-in-progress">0</span>
+        </div>
+        <div class="card-list" id="in-progress-list"></div>
+        <button class="add-card-btn" onclick="openModal('in-progress')">+ Add a card</button>
+      </div>
+
+      <div class="column" data-status="done">
+        <div class="column-header">
+          <h2>Done</h2>
+          <span class="card-count" id="count-done">0</span>
+        </div>
+        <div class="card-list" id="done-list"></div>
+        <button class="add-card-btn" onclick="openModal('done')">+ Add a card</button>
+      </div>
+
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="task-modal">
+    <div class="modal">
+      <h3>Add New Task</h3>
+      <input type="text" id="task-input" placeholder="What needs to be done?" autocomplete="off" />
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-save" onclick="saveTask()">Add Task</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
