@@ -6,10 +6,7 @@ Thanks for reviewing my Soundboard project!
 
 I went for a "digital DJ launchpad" aesthetic for this one. It uses public audio CDNs so the sounds work instantly without needing to download local files.
 
-### 🛠️ Tech Stack
-- **HTML5**: Native `<audio>` elements and range sliders.
-- **CSS3**: Responsive CSS Grid layout and neon-glow hover states.
-- **Vanilla JavaScript**: Web Audio API interaction (playing, pausing, setting volume) and array mapping.
+**Tech Stack:** HTML5, CSS3, Vanilla JavaScript
 
 ### ✨ Features Implemented:
 - **12 Unique Sounds:** Dynamically generated pads using JavaScript.

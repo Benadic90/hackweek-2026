@@ -6,10 +6,7 @@ Welcome to my Rock Paper Scissors game!
 
 I built this entirely from scratch to keep it lightweight and fast. I wanted to focus on making it feel fun and interactive rather than just functional.
 
-### 🛠️ Tech Stack
-- **HTML5**: Clean structure and accessible buttons.
-- **CSS3**: Modern UI design, CSS Grid/Flexbox, and hover micro-animations.
-- **Vanilla JavaScript**: Random number generation (`Math.random`), conditional logic, and DOM manipulation.
+**Tech Stack:** HTML5, CSS3, Vanilla JavaScript
 
 ### ✨ Features Implemented:
 - **Player vs Computer:** The computer randomly selects its move.

@@ -6,10 +6,7 @@ Thanks for checking out my submission for the Kanban Board challenge.
 
 I decided to build this using pure Vanilla code to demonstrate core DOM manipulation and state management skills without relying on heavy frameworks. 
 
-### 🛠️ Tech Stack
-- **HTML5**: Semantic structure and native Drag & Drop API.
-- **CSS3**: Custom properties (variables), Flexbox, and modern pseudo-classes.
-- **Vanilla JavaScript**: State management, DOM injection, and `localStorage` integration.
+**Tech Stack:** HTML5, CSS3, Vanilla JavaScript
 
 ### ✨ Features Implemented:
 - **Card Creation:** You can add new cards via the simple modal.
