@@ -1,19 +1,13 @@
-# CGPA Calculator Challenge
+# CGPA Calculator
 
-Hi Reviewer! 👋
+This is my submission for the first challenge. It's a simple GPA/CGPA calculator that lets you add your subjects, credits, and grades.
 
-Thanks for checking out my submission for the CGPA Calculator challenge. 
+I also added a "What-If" simulator because I always find myself trying to calculate exactly what grades I need in future semesters to reach a specific target CGPA. 
 
-I built this using Vanilla HTML, CSS, and JS to showcase my ability to handle complex mathematical logic and state management without relying on external libraries.
+### How to use
+You don't need any server or build tools. Just download the folder and double click on `index.html` to open it in your browser. All the data is saved in your browser's local storage so it won't disappear if you refresh the page.
 
-**Tech Stack:** HTML5, CSS3, Vanilla JavaScript
-
-### ✨ Features Implemented:
-- **Dynamic GPA Calculation:** Calculates GPA based on standard grading scales.
-- **What-If Mode:** Allows students to project their future CGPA based on target grades.
-- **Modern UI:** Clean, responsive interface with easy-to-read typography.
-
-### 🎥 Demo Video
-[Link to my demo video here] *(Reviewer: If this link is empty, please check the main submission form!)*
-
-Thanks again!
+### Tech stack
+* HTML5
+* CSS3
+* Vanilla JavaScript
