@@ -1,0 +1,27 @@
+// Prime Number Finder in CosmicScript
+// finds all prime numbers up to 50
+
+let n = 2;
+
+print("Prime numbers up to 50:");
+
+while (n <= 50) {
+  let isPrime = true;
+  let d = 2;
+
+  // check if n is divisible by anything from 2 to n-1
+  while (d < n) {
+    if (n % d == 0) {
+      isPrime = false;
+    }
+    d = d + 1;
+  }
+
+  if (isPrime) {
+    print(n);
+  }
+
+  n = n + 1;
+}
+
+print("Done!");
