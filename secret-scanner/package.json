@@ -1,0 +1,14 @@
+{
+  "name": "secret-scanner",
+  "version": "1.0.0",
+  "description": "A CLI security tool that scans files and directories to detect accidentally exposed sensitive information like API keys, passwords, tokens, and credentials.",
+  "main": "scanner.js",
+  "scripts": {
+    "test": "node scanner.js test-files",
+    "install-hook": "node install-hook.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
