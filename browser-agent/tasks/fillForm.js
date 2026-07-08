@@ -23,7 +23,8 @@ async function fillForm(logCallback) {
     logCallback(`Navigating to test form at ${formUrl}...`);
     await page.goto(formUrl, { waitUntil: 'networkidle2', timeout: 30000 });
 
-    logCallback('Form loaded. Starting to fill fields...');
+    logCallback('Form loaded. Waiting for fields to render...');
+    await page.waitForSelector('input[name="custname"]', { timeout: 10000 });
 
     // Fill in the "Customer name" field
     logCallback('Filling in customer name: "Jane Doe"');

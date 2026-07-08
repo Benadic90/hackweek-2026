@@ -22,12 +22,13 @@ async function wikiLookup(topic, logCallback) {
 
     // Type the topic into the search bar
     logCallback(`Typing search query: "${topic}"...`);
-    await page.type('#searchInput', topic, { delay: 40 });
+    await page.waitForSelector('input[name="search"]', { timeout: 10000 });
+    await page.type('input[name="search"]', topic, { delay: 40 });
 
-    // Click the search button
-    logCallback('Clicking search button...');
-    await page.click('#searchButton');
-    await page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 15000 });
+    // Press enter instead of clicking a specific button to be more reliable
+    logCallback('Submitting search...');
+    await page.keyboard.press('Enter');
+    await page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 15000 }).catch(() => {});
 
     // Check if we landed directly on an article or on search results
     const currentUrl = page.url();
