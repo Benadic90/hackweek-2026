@@ -61,9 +61,9 @@ async function fillForm(logCallback) {
     logCallback('Taking screenshot of the filled form...');
     await page.screenshot({ path: beforeFile, fullPage: true });
 
-    // Submit the form
+    // Submit the form natively
     logCallback('Submitting form...');
-    await page.click('button[type="submit"], input[type="submit"]');
+    await page.evaluate(() => document.querySelector('form').submit());
 
     // Wait for the submission response page to load
     await page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 10000 }).catch(() => {});
