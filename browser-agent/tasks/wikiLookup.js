@@ -17,18 +17,9 @@ async function wikiLookup(topic, logCallback) {
   try {
     const page = await browser.newPage();
 
-    logCallback('Navigating to Wikipedia...');
-    await page.goto('https://en.wikipedia.org', { waitUntil: 'networkidle2' });
-
-    // Type the topic into the search bar
-    logCallback(`Typing search query: "${topic}"...`);
-    await page.waitForSelector('input[name="search"]', { timeout: 10000 });
-    await page.type('input[name="search"]', topic, { delay: 40 });
-
-    // Press enter instead of clicking a specific button to be more reliable
-    logCallback('Submitting search...');
-    await page.keyboard.press('Enter');
-    await page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 15000 }).catch(() => {});
+    logCallback(`Searching Wikipedia for: "${topic}"...`);
+    const searchUrl = `https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(topic)}`;
+    await page.goto(searchUrl, { waitUntil: 'networkidle2', timeout: 15000 });
 
     // Check if we landed directly on an article or on search results
     const currentUrl = page.url();
