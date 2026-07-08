@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Blindness Simulator</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Hidden SVG Filters for Color Blindness -->
+  <svg style="display: none;">
+    <defs>
+      <!-- Protanopia (Red-blind) -->
+      <filter id="protanopia">
+        <feColorMatrix type="matrix" values="0.567 0.433 0 0 0  0.558 0.442 0 0 0  0 0.242 0.758 0 0  0 0 0 1 0" />
+      </filter>
+      <!-- Deuteranopia (Green-blind) -->
+      <filter id="deuteranopia">
+        <feColorMatrix type="matrix" values="0.625 0.375 0 0 0  0.7 0.3 0 0 0  0 0.3 0.7 0 0  0 0 0 1 0" />
+      </filter>
+      <!-- Tritanopia (Blue-blind) -->
+      <filter id="tritanopia">
+        <feColorMatrix type="matrix" values="0.95 0.05 0 0 0  0 0.433 0.567 0 0  0 0.475 0.525 0 0  0 0 0 1 0" />
+      </filter>
+      <!-- Achromatopsia (Monochromacy) -->
+      <filter id="achromatopsia">
+        <feColorMatrix type="matrix" values="0.299 0.587 0.114 0 0  0.299 0.587 0.114 0 0  0.299 0.587 0.114 0 0  0 0 0 1 0" />
+      </filter>
+    </defs>
+  </svg>
+
+  <header class="topbar">
+    <div class="brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 12A10 10 0 0 0 22 12A10 10 0 0 0 2 12Z"></path>
+        <path d="M22 12A10 10 0 0 0 2 12"></path>
+        <path d="M12 22A10 10 0 0 0 12 2"></path>
+      </svg>
+      <span>VisionSim</span>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <div class="controls-panel">
+      <div class="upload-section">
+        <h2>1. Upload Image</h2>
+        <p>Select a local image to begin simulation.</p>
+        <label for="image-upload" class="upload-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Choose Image
+        </label>
+        <input type="file" id="image-upload" accept="image/png, image/jpeg, image/webp" hidden>
+      </div>
+
+      <div class="modes-section">
+        <h2>2. Select Vision Mode</h2>
+        <div class="button-group">
+          <button class="mode-btn active" data-filter="normal">Normal Vision</button>
+          <button class="mode-btn" data-filter="protanopia">Protanopia (Red-Blind)</button>
+          <button class="mode-btn" data-filter="deuteranopia">Deuteranopia (Green-Blind)</button>
+          <button class="mode-btn" data-filter="tritanopia">Tritanopia (Blue-Blind)</button>
+          <button class="mode-btn" data-filter="achromatopsia">Achromatopsia (Monochromacy)</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-panel">
+      <!-- Empty state before upload -->
+      <div class="empty-state" id="empty-state">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="1.5">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+          <circle cx="8.5" cy="8.5" r="1.5"></circle>
+          <polyline points="21 15 16 10 5 21"></polyline>
+        </svg>
+        <p>No image uploaded yet</p>
+      </div>
+
+      <!-- Comparison View -->
+      <div class="comparison-view hidden" id="comparison-view">
+        <div class="image-box">
+          <h3>Original</h3>
+          <div class="img-wrapper">
+            <img id="original-img" src="" alt="Original Image">
+          </div>
+        </div>
+        <div class="image-box">
+          <h3 id="simulation-title">Simulated</h3>
+          <div class="img-wrapper">
+            <!-- This image gets the CSS filter applied -->
+            <img id="simulated-img" src="" alt="Simulated Image">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
