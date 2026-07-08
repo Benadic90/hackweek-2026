@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Habit Streak Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+      </svg>
+      <span>HabitStreak</span>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <div class="add-habit-section">
+      <form id="add-habit-form" class="add-form">
+        <input type="text" id="habit-input" placeholder="What habit do you want to build? (e.g. Read 10 pages)" required>
+        <button type="submit">Add Habit</button>
+      </form>
+    </div>
+
+    <!-- Habits will be rendered here by JavaScript -->
+    <div id="habits-container" class="habits-list"></div>
+
+    <!-- Empty state shown when there are no habits -->
+    <div id="empty-state" class="empty-state hidden">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 8 12 12 14 14"></polyline>
+      </svg>
+      <p>You aren't tracking any habits yet.<br>Add one above to get started!</p>
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

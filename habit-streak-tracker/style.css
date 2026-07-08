@@ -1,0 +1,206 @@
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --text-light: #64748b;
+  --border: #e2e8f0;
+  --primary: #10b981; /* Emerald green for positive habits */
+  --primary-hover: #059669;
+  --danger: #ef4444;
+  --day-empty: #f1f5f9;
+  --day-done: #10b981;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* Navbar */
+.navbar {
+  background: var(--surface);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--primary);
+}
+
+/* Main Container */
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+/* Add Form */
+.add-form {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.add-form input {
+  flex-grow: 1;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.add-form input:focus {
+  border-color: var(--primary);
+}
+
+.add-form button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.add-form button:hover {
+  background: var(--primary-hover);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--text-light);
+}
+
+.empty-state.hidden {
+  display: none;
+}
+
+.empty-state svg {
+  margin-bottom: 1rem;
+}
+
+/* Habits List */
+.habits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.habit-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.habit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.habit-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.habit-stats {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.streak-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: #ecfdf5;
+  color: #047857;
+  padding: 0.35rem 0.75rem;
+  border-radius: 99px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+}
+
+.delete-btn:hover {
+  color: var(--danger);
+  background: #fef2f2;
+}
+
+/* 30-Day Grid */
+.calendar-wrapper {
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.calendar-grid {
+  display: flex;
+  gap: 6px;
+}
+
+/* Individual Day Box */
+.day-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.day-square {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background-color: var(--day-empty);
+  cursor: pointer;
+  transition: transform 0.1s, background-color 0.2s;
+  border: 1px solid #e2e8f0;
+}
+
+.day-square:hover {
+  transform: scale(1.1);
+  border-color: #cbd5e1;
+}
+
+.day-square.done {
+  background-color: var(--day-done);
+  border-color: var(--day-done);
+}
+
+.day-label {
+  font-size: 0.65rem;
+  color: var(--text-light);
+  white-space: nowrap;
+}
