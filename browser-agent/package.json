@@ -1,0 +1,14 @@
+{
+  "name": "browser-agent",
+  "version": "1.0.0",
+  "description": "Autonomous browser agent that navigates, interacts, and extracts data from the web",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "puppeteer": "^21.0.0"
+  }
+}
