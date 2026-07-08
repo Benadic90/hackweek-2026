@@ -1,0 +1,334 @@
+:root {
+  --bg-app: #f1f5f9;
+  --bg-surface: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --radius: 12px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+  background: var(--bg-surface);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--primary);
+}
+
+/* Layout Container */
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  flex-grow: 1;
+}
+
+/* --- Editor Panel (Left) --- */
+.editor-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.editor-section {
+  background: var(--bg-surface);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.editor-section h2 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--text-main);
+}
+
+/* Template Selector */
+.template-selector {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.template-btn {
+  flex: 1;
+  background: var(--bg-app);
+  border: 1px solid var(--border);
+  padding: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.template-btn:hover { background: #e2e8f0; }
+
+.template-btn.active {
+  background: #eff6ff;
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Form Styles */
+.details-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.form-group input {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus { border-color: var(--primary); }
+
+.form-group input[type="file"] {
+  font-size: 0.85rem;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+/* Export Buttons */
+.export-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.export-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s;
+}
+
+.export-btn:hover { opacity: 0.9; }
+
+.img-btn {
+  background: var(--primary);
+  color: white;
+}
+
+.pdf-btn {
+  background: #0f172a;
+  color: white;
+}
+
+/* --- Preview Panel (Right) --- */
+.preview-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-surface);
+  border: 1px dashed #cbd5e1;
+  border-radius: var(--radius);
+  padding: 2rem;
+  position: relative;
+}
+
+.preview-hint {
+  position: absolute;
+  top: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* The wrapper that html2canvas will capture */
+.card-capture-area {
+  padding: 2rem; /* Buffer so shadows don't get clipped in the export */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* 
+======================================
+  BUSINESS CARD TEMPLATES 
+======================================
+*/
+.business-card {
+  width: 450px;
+  height: 250px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  background-color: white; /* fallback */
+}
+
+/* Base elements inside the card */
+.card-content {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.card-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.card-titles h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.15rem;
+  line-height: 1.1;
+}
+
+.card-titles h2 {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.card-contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.card-background-accent {
+  position: absolute;
+  z-index: 1;
+}
+
+/* --- THEME 1: Minimal (Default) --- */
+.theme-minimal {
+  background: white;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
+}
+.theme-minimal .card-titles h2 { color: #64748b; }
+.theme-minimal .contact-item { color: #475569; }
+.theme-minimal .contact-item svg { color: #3b82f6; }
+.theme-minimal .card-background-accent {
+  top: 0; left: 0; width: 100%; height: 6px;
+  background: linear-gradient(90deg, #3b82f6, #14b8a6);
+}
+
+/* --- THEME 2: Dark Mode --- */
+.theme-dark {
+  background: #0f172a;
+  color: #f8fafc;
+}
+.theme-dark .card-titles h2 { color: #94a3b8; }
+.theme-dark .contact-item { color: #cbd5e1; }
+.theme-dark .contact-item svg { color: #818cf8; }
+.theme-dark .card-image { border-color: #1e293b; }
+.theme-dark .card-background-accent {
+  bottom: 0; right: 0; width: 150px; height: 150px;
+  background: #1e293b;
+  border-radius: 50%;
+  transform: translate(30%, 30%);
+}
+
+/* --- THEME 3: Creative --- */
+.theme-creative {
+  background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+  color: #334155;
+  font-family: 'Playfair Display', serif; /* Elegant font */
+}
+.theme-creative .card-titles h2 { 
+  color: #db2777; 
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+}
+.theme-creative .contact-item { color: #475569; font-family: 'Inter', sans-serif;}
+.theme-creative .contact-item svg { color: #db2777; }
+.theme-creative .card-image { border-color: #fce7f3; border-radius: 12px; }
+.theme-creative .card-background-accent {
+  top: -50px; right: -50px; width: 200px; height: 200px;
+  background: #fce7f3;
+  border-radius: 50%;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .container { grid-template-columns: 1fr; }
+}
