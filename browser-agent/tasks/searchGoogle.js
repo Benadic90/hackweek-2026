@@ -1,9 +1,9 @@
 const puppeteer = require('puppeteer');
 
 /**
- * Google Search Task
- * Navigates to Google, types the user's query, submits the form,
- * and extracts the top search results from the results page.
+ * Web Search Task
+ * Navigates to DuckDuckGo, types the user's query, submits the form,
+ * and extracts the top search results. (Switched to DuckDuckGo to bypass Google CAPTCHA).
  */
 async function searchGoogle(query, logCallback) {
   logCallback('Launching headless Chrome browser...');
@@ -14,53 +14,31 @@ async function searchGoogle(query, logCallback) {
 
   try {
     const page = await browser.newPage();
-
-    // Set a realistic user agent so Google doesn't block us
     await page.setUserAgent(
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     );
 
-    logCallback('Navigating to Google.com...');
-    await page.goto('https://www.google.com', { waitUntil: 'networkidle2' });
-
-    // Sometimes Google shows a consent page — try to handle it
-    try {
-      const acceptBtn = await page.$('[id="L2AGLb"]');
-      if (acceptBtn) {
-        logCallback('Accepting cookie consent...');
-        await acceptBtn.click();
-        await page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 5000 });
-      }
-    } catch (e) {
-      // no consent page, that's fine
-    }
-
-    logCallback(`Typing search query: "${query}"...`);
-    await page.type('textarea[name="q"], input[name="q"]', query, { delay: 50 });
-
-    logCallback('Submitting search form...');
-    await page.keyboard.press('Enter');
-    await page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 15000 });
+    logCallback('Navigating to Search Engine...');
+    // DuckDuckGo HTML version is perfect for scraping without JS/CAPTCHA blockers
+    const searchUrl = `https://duckduckgo.com/html/?q=${encodeURIComponent(query)}`;
+    await page.goto(searchUrl, { waitUntil: 'networkidle2' });
 
     logCallback('Extracting search results from the page...');
 
-    // Extract the organic search results from the DOM
     const results = await page.evaluate(() => {
       const items = [];
-      // Google wraps each result in an element with class 'g'
-      const resultElements = document.querySelectorAll('.g');
+      const resultElements = document.querySelectorAll('.result');
 
       resultElements.forEach((el, index) => {
-        if (index >= 5) return; // only grab the top 5
+        if (index >= 5) return; 
 
-        const titleEl = el.querySelector('h3');
-        const linkEl = el.querySelector('a');
-        const snippetEl = el.querySelector('[data-sncf], .VwiC3b, [style*="-webkit-line-clamp"]');
+        const titleEl = el.querySelector('.result__title a');
+        const snippetEl = el.querySelector('.result__snippet');
 
-        if (titleEl && linkEl) {
+        if (titleEl) {
           items.push({
             title: titleEl.innerText,
-            url: linkEl.href,
+            url: titleEl.href,
             snippet: snippetEl ? snippetEl.innerText : 'No snippet available'
           });
         }
@@ -69,7 +47,6 @@ async function searchGoogle(query, logCallback) {
       return items;
     });
 
-    // Take a screenshot of the results page as proof
     logCallback('Taking screenshot of results page...');
     const screenshotPath = `screenshots/search_${Date.now()}.png`;
     await page.screenshot({ path: screenshotPath, fullPage: false });

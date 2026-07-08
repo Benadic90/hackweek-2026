@@ -16,7 +16,7 @@ const taskConfig = {
   search: {
     label: 'Search Query',
     placeholder: 'e.g. best programming languages 2026',
-    description: 'The agent will search Google for your query and extract the top results.',
+    description: 'The agent will search the web for your query and extract the top results.',
     needsInput: true
   },
   screenshot: {
