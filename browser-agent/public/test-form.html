@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pizza Delivery Order Form</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #f4f4f5; padding: 2rem; color: #18181b; }
+    .container { max-width: 500px; margin: 0 auto; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    h1 { margin-top: 0; font-size: 1.5rem; border-bottom: 2px solid #e4e4e7; padding-bottom: 1rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    label { display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; }
+    input[type="text"], input[type="email"], input[type="tel"], textarea {
+      width: 100%; padding: 0.75rem; border: 1px solid #d4d4d8; border-radius: 6px; box-sizing: border-box; font-family: inherit;
+    }
+    .radio-group, .checkbox-group { display: flex; gap: 1rem; align-items: center; }
+    .radio-group label, .checkbox-group label { display: flex; align-items: center; gap: 0.3rem; font-weight: 400; margin: 0; }
+    button { background: #8b5cf6; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1rem; }
+    button:hover { background: #7c3aed; }
+    #success { display: none; background: #10b981; color: white; padding: 1rem; border-radius: 6px; margin-top: 1rem; text-align: center; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Pizza Delivery Order Form</h1>
+    <form id="orderForm" action="/test-form.html" method="GET">
+      <div class="form-group">
+        <label>Customer Name</label>
+        <input type="text" name="custname" required>
+      </div>
+      <div class="form-group">
+        <label>Telephone</label>
+        <input type="tel" name="custtel" required>
+      </div>
+      <div class="form-group">
+        <label>Email address</label>
+        <input type="email" name="custemail" required>
+      </div>
+      
+      <div class="form-group">
+        <label>Pizza Size</label>
+        <div class="radio-group">
+          <label><input type="radio" name="size" value="small"> Small</label>
+          <label><input type="radio" name="size" value="medium"> Medium</label>
+          <label><input type="radio" name="size" value="large"> Large</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Extra Toppings</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="topping" value="bacon"> Bacon</label>
+          <label><input type="checkbox" name="topping" value="cheese"> Extra Cheese</label>
+          <label><input type="checkbox" name="topping" value="onion"> Onion</label>
+          <label><input type="checkbox" name="topping" value="mushroom"> Mushroom</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Preferred Delivery Time</label>
+        <input type="text" name="delivery" placeholder="e.g. 19:00">
+      </div>
+
+      <div class="form-group">
+        <label>Delivery Instructions</label>
+        <textarea name="comments" rows="3"></textarea>
+      </div>
+
+      <button type="submit">Submit Order</button>
+    </form>
+    
+    <div id="success">Order Submitted Successfully!</div>
+  </div>
+
+  <script>
+    // Just a dummy script to show success if the URL has query params (meaning it was submitted)
+    if (window.location.search.includes('custname')) {
+      document.getElementById('orderForm').style.display = 'none';
+      document.getElementById('success').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

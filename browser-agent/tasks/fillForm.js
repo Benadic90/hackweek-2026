@@ -12,12 +12,22 @@ async function fillForm(logCallback) {
     await page.setViewport({ width: 1280, height: 800 });
 
     // We'll use httpbin's test form — it's a real public form designed for testing
-    const formUrl = 'https://httpbin.org/forms/post';
+    const port = process.env.PORT || 3005;
+    const formUrl = `http://localhost:${port}/test-form.html`;
     logCallback(`Navigating to test form at ${formUrl}...`);
-    await page.goto(formUrl, { waitUntil: 'networkidle2', timeout: 30000 });
+    
+    try {
+      await page.goto(formUrl, { waitUntil: 'networkidle2', timeout: 30000 });
+    } catch (err) {
+      throw new Error(`Failed to navigate to form: ${err.message}`);
+    }
 
     logCallback('Form loaded. Waiting for fields to render...');
-    await page.waitForSelector('input[name="custname"]', { timeout: 10000 });
+    try {
+      await page.waitForSelector('input[name="custname"]', { timeout: 10000 });
+    } catch (err) {
+      throw new Error(`Failed to find form fields: ${err.message}`);
+    }
 
     // Fill in the "Customer name" field
     logCallback('Filling in customer name: "Jane Doe"');
