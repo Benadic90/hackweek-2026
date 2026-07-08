@@ -7,39 +7,82 @@
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <header>
-    <h1>🎨 Whiteboard</h1>
-    <div class="user-badge" id="user-badge">
-      <span class="dot"></span>
-      <span id="user-count">1</span> online
+  <!-- Top Navigation -->
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+        <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+        <path d="M2 2l7.586 7.586"></path>
+        <circle cx="11" cy="11" r="2"></circle>
+      </svg>
+      <span>Whiteboard</span>
+    </div>
+    
+    <div class="user-badge" id="user-badge" title="Live Users">
+      <span class="status-dot"></span>
+      <span id="user-count" class="count-number">1</span>
     </div>
   </header>
 
-  <!-- floating toolbar on the left side -->
-  <div class="toolbar">
-    <div class="tool-group">
-      <label for="color-picker">Color</label>
-      <input type="color" id="color-picker" value="#ffffff">
+  <!-- Drawing Area -->
+  <main class="canvas-container">
+    <canvas id="whiteboard"></canvas>
+  </main>
+
+  <!-- Floating Toolbar -->
+  <div class="floating-toolbar">
+    <!-- Color Picker -->
+    <div class="tool-item">
+      <input type="color" id="color-picker" value="#0f172a" title="Brush Color">
     </div>
 
-    <div class="tool-group">
-      <label for="brush-size">Size: <span id="size-label">4</span></label>
+    <div class="divider"></div>
+
+    <!-- Brush Size -->
+    <div class="tool-item size-control" title="Brush Size">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+        <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+        <path d="M2 2l7.586 7.586"></path>
+        <circle cx="11" cy="11" r="2"></circle>
+      </svg>
       <input type="range" id="brush-size" min="1" max="30" value="4">
+      <span id="size-label" class="size-label">4</span>
     </div>
 
-    <button class="tool-btn" id="eraser-btn" title="Eraser">🧹 Eraser</button>
-    <button class="tool-btn" id="undo-btn" title="Undo last stroke">↩ Undo</button>
-    <button class="tool-btn danger" id="clear-btn" title="Clear entire board">🗑 Clear All</button>
+    <div class="divider"></div>
+
+    <!-- Actions -->
+    <button class="tool-btn" id="eraser-btn" title="Eraser (E)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 20H7L3 16C2.5 15.5 2.5 14.5 3 14L13 4C13.5 3.5 14.5 3.5 15 4L20 9C20.5 9.5 20.5 10.5 20 11L11 20H20Z"></path>
+        <path d="M16 8L8 16"></path>
+      </svg>
+    </button>
+
+    <button class="tool-btn" id="undo-btn" title="Undo (Ctrl+Z)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 7v6h6"></path>
+        <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"></path>
+      </svg>
+    </button>
+
+    <div class="divider"></div>
+
+    <button class="tool-btn danger" id="clear-btn" title="Clear Canvas">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 6h18"></path>
+        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+      </svg>
+    </button>
   </div>
 
-  <!-- the actual drawing area -->
-  <canvas id="whiteboard"></canvas>
-
-  <!-- socket.io client lib served automatically by the server -->
   <script src="/socket.io/socket.io.js"></script>
   <script src="script.js"></script>
 </body>

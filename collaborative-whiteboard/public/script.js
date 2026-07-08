@@ -20,15 +20,16 @@ let isDrawing = false;
 let lastX = 0;
 let lastY = 0;
 let isEraser = false;
-let currentColor = '#ffffff';
+let currentColor = '#0f172a';
 let currentSize = 4;
 
 // --- Canvas setup ---
 
 // make canvas fill the whole screen below the header
 function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight - 50; // subtract header height
+  const container = document.querySelector('.canvas-container');
+  canvas.width = container.clientWidth;
+  canvas.height = container.clientHeight;
 }
 
 // need to resize on load and when window changes
@@ -66,10 +67,15 @@ canvas.addEventListener('mousemove', (e) => {
 
   const x = e.offsetX;
   const y = e.offsetY;
-  const color = isEraser ? '#111' : currentColor;
-
-  // draw it locally first so it feels instant
-  drawLine(lastX, lastY, x, y, color, currentSize);
+  const color = isEraser ? 'transparent' : currentColor;
+  
+  if (isEraser) {
+    ctx.globalCompositeOperation = 'destination-out';
+    drawLine(lastX, lastY, x, y, 'rgba(0,0,0,1)', currentSize);
+    ctx.globalCompositeOperation = 'source-over';
+  } else {
+    drawLine(lastX, lastY, x, y, color, currentSize);
+  }
 
   // send the stroke to everyone else
   socket.emit('draw', {
@@ -108,9 +114,15 @@ canvas.addEventListener('touchmove', (e) => {
   const rect = canvas.getBoundingClientRect();
   const x = touch.clientX - rect.left;
   const y = touch.clientY - rect.top;
-  const color = isEraser ? '#111' : currentColor;
+  const color = isEraser ? 'transparent' : currentColor;
 
-  drawLine(lastX, lastY, x, y, color, currentSize);
+  if (isEraser) {
+    ctx.globalCompositeOperation = 'destination-out';
+    drawLine(lastX, lastY, x, y, 'rgba(0,0,0,1)', currentSize);
+    ctx.globalCompositeOperation = 'source-over';
+  } else {
+    drawLine(lastX, lastY, x, y, color, currentSize);
+  }
 
   socket.emit('draw', {
     x1: lastX,
@@ -162,7 +174,13 @@ clearBtn.addEventListener('click', () => {
 
 // when another user draws something
 socket.on('draw', (data) => {
-  drawLine(data.x1, data.y1, data.x2, data.y2, data.color, data.size);
+  if (data.color === 'transparent') {
+    ctx.globalCompositeOperation = 'destination-out';
+    drawLine(data.x1, data.y1, data.x2, data.y2, 'rgba(0,0,0,1)', data.size);
+    ctx.globalCompositeOperation = 'source-over';
+  } else {
+    drawLine(data.x1, data.y1, data.x2, data.y2, data.color, data.size);
+  }
 });
 
 // when someone clears the board
@@ -173,7 +191,13 @@ socket.on('clear', () => {
 // load the full drawing history (happens when you first join)
 socket.on('load-history', (history) => {
   history.forEach((data) => {
-    drawLine(data.x1, data.y1, data.x2, data.y2, data.color, data.size);
+    if (data.color === 'transparent') {
+      ctx.globalCompositeOperation = 'destination-out';
+      drawLine(data.x1, data.y1, data.x2, data.y2, 'rgba(0,0,0,1)', data.size);
+      ctx.globalCompositeOperation = 'source-over';
+    } else {
+      drawLine(data.x1, data.y1, data.x2, data.y2, data.color, data.size);
+    }
   });
 });
 
@@ -181,7 +205,13 @@ socket.on('load-history', (history) => {
 socket.on('full-redraw', (history) => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   history.forEach((data) => {
-    drawLine(data.x1, data.y1, data.x2, data.y2, data.color, data.size);
+    if (data.color === 'transparent') {
+      ctx.globalCompositeOperation = 'destination-out';
+      drawLine(data.x1, data.y1, data.x2, data.y2, 'rgba(0,0,0,1)', data.size);
+      ctx.globalCompositeOperation = 'source-over';
+    } else {
+      drawLine(data.x1, data.y1, data.x2, data.y2, data.color, data.size);
+    }
   });
 });
 
