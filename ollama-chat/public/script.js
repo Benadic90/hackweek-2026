@@ -1,16 +1,130 @@
-// chat logic
+// chat logic with history saved to localStorage
 
 const messagesDiv = document.getElementById('messages');
 const userInput = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
 const clearBtn = document.getElementById('clear-btn');
+const newChatBtn = document.getElementById('new-chat-btn');
 const modelSelect = document.getElementById('model-select');
+const historyList = document.getElementById('history-list');
 
-// conversation history (sent to ollama each time for context)
-let chatHistory = [];
+let chatHistory = []; // current conversation messages for ollama
 let isGenerating = false;
+let currentChatId = null;
 
-// load available models on startup
+// ---- localStorage helpers ----
+function getAllChats() {
+  let data = localStorage.getItem('ollama_chats');
+  return data ? JSON.parse(data) : [];
+}
+
+function saveAllChats(chats) {
+  localStorage.setItem('ollama_chats', JSON.stringify(chats));
+}
+
+function saveCurrentChat() {
+  if (chatHistory.length === 0) return;
+
+  let chats = getAllChats();
+  let existing = chats.find(c => c.id === currentChatId);
+
+  // use first user message as title
+  let title = 'New Chat';
+  let firstUserMsg = chatHistory.find(m => m.role === 'user');
+  if (firstUserMsg) {
+    title = firstUserMsg.content.substring(0, 40);
+    if (firstUserMsg.content.length > 40) title += '...';
+  }
+
+  if (existing) {
+    existing.messages = chatHistory;
+    existing.title = title;
+    existing.updatedAt = Date.now();
+  } else {
+    chats.unshift({
+      id: currentChatId,
+      title: title,
+      messages: chatHistory,
+      createdAt: Date.now(),
+      updatedAt: Date.now()
+    });
+  }
+
+  saveAllChats(chats);
+  renderHistory();
+}
+
+function deleteChat(chatId) {
+  let chats = getAllChats().filter(c => c.id !== chatId);
+  saveAllChats(chats);
+  if (currentChatId === chatId) {
+    startNewChat();
+  }
+  renderHistory();
+}
+
+// ---- render history sidebar ----
+function renderHistory() {
+  let chats = getAllChats();
+  historyList.innerHTML = '';
+
+  if (chats.length === 0) {
+    historyList.innerHTML = '<div class="history-empty">No conversations yet</div>';
+    return;
+  }
+
+  chats.forEach(chat => {
+    let item = document.createElement('div');
+    item.className = 'history-item' + (chat.id === currentChatId ? ' active' : '');
+
+    let titleSpan = document.createElement('span');
+    titleSpan.className = 'history-title';
+    titleSpan.textContent = chat.title;
+    titleSpan.onclick = () => loadChat(chat.id);
+
+    let deleteBtn = document.createElement('button');
+    deleteBtn.className = 'history-delete';
+    deleteBtn.innerHTML = '✕';
+    deleteBtn.title = 'Delete';
+    deleteBtn.onclick = (e) => { e.stopPropagation(); deleteChat(chat.id); };
+
+    item.appendChild(titleSpan);
+    item.appendChild(deleteBtn);
+    historyList.appendChild(item);
+  });
+}
+
+function loadChat(chatId) {
+  let chats = getAllChats();
+  let chat = chats.find(c => c.id === chatId);
+  if (!chat) return;
+
+  currentChatId = chatId;
+  chatHistory = [...chat.messages];
+
+  // re-render messages
+  messagesDiv.innerHTML = '';
+  for (let msg of chatHistory) {
+    addMessage(msg.role === 'user' ? 'user' : 'assistant', msg.content);
+  }
+  renderHistory();
+}
+
+function startNewChat() {
+  currentChatId = 'chat_' + Date.now();
+  chatHistory = [];
+  messagesDiv.innerHTML = `
+    <div class="welcome">
+      <div class="welcome-icon">💬</div>
+      <h2>Chat with Ollama</h2>
+      <p>Start a conversation with your local AI model. Type a message below to begin.</p>
+    </div>
+  `;
+  renderHistory();
+  userInput.focus();
+}
+
+// ---- load models ----
 async function loadModels() {
   try {
     const res = await fetch('/api/models');
@@ -24,20 +138,17 @@ async function loadModels() {
         modelSelect.appendChild(opt);
       });
     }
-  } catch (e) {
-    // ollama might not be running yet, that's ok
-  }
+  } catch (e) {}
 }
 
 loadModels();
 
-// auto-resize textarea
+// ---- textarea auto-resize ----
 userInput.addEventListener('input', () => {
   userInput.style.height = 'auto';
   userInput.style.height = Math.min(userInput.scrollHeight, 150) + 'px';
 });
 
-// send on enter (shift+enter for newline)
 userInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
@@ -46,20 +157,15 @@ userInput.addEventListener('keydown', (e) => {
 });
 
 sendBtn.addEventListener('click', sendMessage);
+newChatBtn.addEventListener('click', startNewChat);
 
 clearBtn.addEventListener('click', () => {
-  chatHistory = [];
-  messagesDiv.innerHTML = `
-    <div class="welcome">
-      <div class="welcome-icon">💬</div>
-      <h2>Chat with Ollama</h2>
-      <p>Start a conversation with your local AI model. Type a message below to begin.</p>
-    </div>
-  `;
+  localStorage.removeItem('ollama_chats');
+  startNewChat();
 });
 
+// ---- message rendering ----
 function addMessage(role, content) {
-  // remove welcome screen if its there
   const welcome = messagesDiv.querySelector('.welcome');
   if (welcome) welcome.remove();
 
@@ -113,6 +219,7 @@ function scrollToBottom() {
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
 
+// ---- send message ----
 async function sendMessage() {
   const text = userInput.value.trim();
   if (!text || isGenerating) return;
@@ -120,15 +227,13 @@ async function sendMessage() {
   isGenerating = true;
   sendBtn.disabled = true;
 
-  // show user message
   addMessage('user', text);
   userInput.value = '';
   userInput.style.height = 'auto';
 
-  // add to history
   chatHistory.push({ role: 'user', content: text });
+  saveCurrentChat();
 
-  // show loading
   addLoadingIndicator();
 
   try {
@@ -143,7 +248,6 @@ async function sendMessage() {
 
     removeLoadingIndicator();
 
-    // create the AI message bubble and stream tokens into it
     const aiBubble = addMessage('assistant', '');
     let fullResponse = '';
 
@@ -179,15 +283,11 @@ async function sendMessage() {
             scrollToBottom();
           }
 
-          if (data.done) {
-            // add to history for context
-            if (fullResponse) {
-              chatHistory.push({ role: 'assistant', content: fullResponse });
-            }
+          if (data.done && fullResponse) {
+            chatHistory.push({ role: 'assistant', content: fullResponse });
+            saveCurrentChat();
           }
-        } catch (e) {
-          // skip bad json
-        }
+        } catch (e) {}
       }
     }
 
@@ -204,3 +304,6 @@ async function sendMessage() {
   sendBtn.disabled = false;
   userInput.focus();
 }
+
+// ---- init ----
+startNewChat();
