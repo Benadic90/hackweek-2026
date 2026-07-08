@@ -1,10 +1,6 @@
 const puppeteer = require('puppeteer');
 
-/**
- * Web Search Task
- * Navigates to DuckDuckGo, types the user's query, submits the form,
- * and extracts the top search results. (Switched to DuckDuckGo to bypass Google CAPTCHA).
- */
+// duckduckgo search scraper
 async function searchGoogle(query, logCallback) {
   logCallback('Launching headless Chrome browser...');
   const browser = await puppeteer.launch({

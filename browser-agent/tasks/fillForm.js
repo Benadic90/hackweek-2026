@@ -1,12 +1,5 @@
 const puppeteer = require('puppeteer');
 
-/**
- * Auto Form Filler Task
- * Navigates to a public test form page, automatically fills in
- * every field with realistic dummy data, and submits the form.
- * This demonstrates the agent's ability to interact with real
- * web elements like text inputs, dropdowns, textareas, and buttons.
- */
 async function fillForm(logCallback) {
   logCallback('Launching headless Chrome browser...');
   const browser = await puppeteer.launch({

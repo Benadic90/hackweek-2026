@@ -1,12 +1,6 @@
 const puppeteer = require('puppeteer');
 
-/**
- * Wikipedia Lookup Task
- * Navigates to Wikipedia, searches for the user's topic,
- * clicks into the article, and extracts the summary paragraph
- * and the table of contents. This demonstrates multi-step
- * autonomous navigation across multiple pages.
- */
+// grab summary and table of contents from wiki
 async function wikiLookup(topic, logCallback) {
   logCallback('Launching headless Chrome browser...');
   const browser = await puppeteer.launch({

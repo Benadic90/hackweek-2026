@@ -22,12 +22,7 @@ app.use('/screenshots', express.static(path.join(__dirname, 'screenshots')));
 const screenshotsDir = path.join(__dirname, 'screenshots');
 if (!fs.existsSync(screenshotsDir)) fs.mkdirSync(screenshotsDir);
 
-/**
- * We use Server-Sent Events (SSE) to stream real-time logs
- * back to the browser as the agent works. This gives the user
- * a live "terminal" experience showing exactly what the agent
- * is doing step by step.
- */
+// setup SSE for live logs so the frontend terminal works
 app.get('/api/run', async (req, res) => {
   const task = req.query.task;
   const input = req.query.input || '';
@@ -45,10 +40,10 @@ app.get('/api/run', async (req, res) => {
   try {
     let result;
 
-    // Route to the correct task module based on user selection
+    // route to task
     switch (task) {
       case 'search':
-        sendLog(`Starting Google Search task for: "${input}"`);
+        sendLog(`Starting Web Search task for: "${input}"`);
         result = await searchGoogle(input, sendLog);
         break;
 
