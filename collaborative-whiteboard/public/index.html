@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collaborative Whiteboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <h1>🎨 Whiteboard</h1>
+    <div class="user-badge" id="user-badge">
+      <span class="dot"></span>
+      <span id="user-count">1</span> online
+    </div>
+  </header>
+
+  <!-- floating toolbar on the left side -->
+  <div class="toolbar">
+    <div class="tool-group">
+      <label for="color-picker">Color</label>
+      <input type="color" id="color-picker" value="#ffffff">
+    </div>
+
+    <div class="tool-group">
+      <label for="brush-size">Size: <span id="size-label">4</span></label>
+      <input type="range" id="brush-size" min="1" max="30" value="4">
+    </div>
+
+    <button class="tool-btn" id="eraser-btn" title="Eraser">🧹 Eraser</button>
+    <button class="tool-btn" id="undo-btn" title="Undo last stroke">↩ Undo</button>
+    <button class="tool-btn danger" id="clear-btn" title="Clear entire board">🗑 Clear All</button>
+  </div>
+
+  <!-- the actual drawing area -->
+  <canvas id="whiteboard"></canvas>
+
+  <!-- socket.io client lib served automatically by the server -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
