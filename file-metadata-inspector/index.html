@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Metadata Inspector</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- EXIF.js for extracting camera metadata from images -->
+  <script src="https://cdn.jsdelivr.net/npm/exif-js@2.3.0/exif.min.js"></script>
+  <!-- PDF.js for reading PDF metadata -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+      </svg>
+      <span>MetaInspect</span>
+    </div>
+    <p class="tagline">Upload images or PDFs to inspect their metadata</p>
+  </header>
+
+  <main class="container">
+
+    <!-- Upload Area -->
+    <div class="upload-zone" id="upload-zone">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="17 8 12 3 7 8"></polyline>
+        <line x1="12" y1="3" x2="12" y2="15"></line>
+      </svg>
+      <p class="upload-title">Drag & drop a file here</p>
+      <p class="upload-hint">or click to browse — supports Images (JPG, PNG, WebP) and PDFs</p>
+      <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,application/pdf" hidden>
+    </div>
+
+    <!-- Results Section (hidden until a file is uploaded) -->
+    <div class="results hidden" id="results">
+
+      <!-- File Preview -->
+      <div class="preview-card" id="preview-card">
+        <img id="preview-img" src="" alt="Preview" class="hidden">
+        <div id="pdf-preview" class="pdf-placeholder hidden">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.5">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+          </svg>
+          <span>PDF Document</span>
+        </div>
+      </div>
+
+      <!-- Metadata Tables -->
+      <div class="metadata-section">
+
+        <!-- Basic File Info (from Browser File API) -->
+        <div class="meta-card">
+          <h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            Basic File Info
+          </h2>
+          <table id="basic-table">
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <!-- Image Dimensions (only for images) -->
+        <div class="meta-card hidden" id="dimensions-card">
+          <h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+            Image Dimensions
+          </h2>
+          <table id="dimensions-table">
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <!-- EXIF Data (only for images with EXIF) -->
+        <div class="meta-card hidden" id="exif-card">
+          <h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            Camera / EXIF Data
+          </h2>
+          <table id="exif-table">
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <!-- PDF Metadata (only for PDFs) -->
+        <div class="meta-card hidden" id="pdf-card">
+          <h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            PDF Metadata
+          </h2>
+          <table id="pdf-table">
+            <tbody></tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
