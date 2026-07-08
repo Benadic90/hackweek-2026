@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Time Capsule</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
+      </svg>
+      <span>TimeCapsule</span>
+    </div>
+    <button class="create-btn" id="open-modal-btn">+ New Capsule</button>
+  </header>
+
+  <main class="container">
+    <p class="subtitle">Store memories today. Unlock them in the future.</p>
+
+    <!-- Capsule Grid -->
+    <div class="capsule-grid" id="capsule-grid">
+      <!-- cards get injected here by JS -->
+    </div>
+
+    <div class="empty-state hidden" id="empty-state">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
+      </svg>
+      <p>No time capsules yet — create your first one!</p>
+    </div>
+  </main>
+
+  <!-- Create Capsule Modal -->
+  <div class="modal-backdrop hidden" id="modal-backdrop">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Create Time Capsule</h2>
+        <button class="close-btn" id="close-modal-btn">&times;</button>
+      </div>
+      <form id="capsule-form">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" id="title" placeholder="My graduation memory..." required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" rows="4" placeholder="Write your future self a note..." required></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="unlock-date">Unlock Date</label>
+            <input type="datetime-local" id="unlock-date" required>
+          </div>
+          <div class="form-group">
+            <label for="visibility">Visibility</label>
+            <select id="visibility">
+              <option value="false">Private</option>
+              <option value="true">Public</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="image">Attach Image (optional)</label>
+          <input type="file" id="image" accept="image/jpeg,image/png,image/webp">
+        </div>
+        <button type="submit" class="submit-btn">Seal Capsule 🔒</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
