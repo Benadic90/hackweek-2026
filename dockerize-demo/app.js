@@ -1,12 +1,17 @@
+// Load env vars from .env file (super important for docker-compose)
 require('dotenv').config();
 const express = require('express');
 
 const app = express();
+
+// Grab config from environment, fallback to defaults for local dev
 const PORT = process.env.PORT || 3000;
 const APP_NAME = process.env.APP_NAME || 'Dockerized App';
 const ENVIRONMENT = process.env.NODE_ENV || 'development';
 
+// Just a simple route to prove the container is alive and mapped correctly
 app.get('/', (req, res) => {
+    // keeping the HTML inline here so we don't have to mess with static folders for this demo
     res.send(`
         <!DOCTYPE html>
         <html lang="en">
@@ -15,8 +20,9 @@ app.get('/', (req, res) => {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>${APP_NAME}</title>
             <style>
+                /* Quick and dirty styling to make it look decent */
                 body {
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    font-family: 'Segoe UI', Tahoma, sans-serif;
                     background: #0f172a;
                     color: #f8fafc;
                     display: flex;
@@ -42,7 +48,6 @@ app.get('/', (req, res) => {
                     border-radius: 999px;
                     font-size: 0.8rem;
                     font-weight: bold;
-                    text-transform: uppercase;
                 }
                 p { color: #cbd5e1; line-height: 1.6; }
                 .docker-icon { font-size: 4rem; margin-bottom: 1rem; }
@@ -54,13 +59,14 @@ app.get('/', (req, res) => {
                 <h1>${APP_NAME}</h1>
                 <p>Status: <span class="badge">Running Perfectly</span></p>
                 <p>Environment: <strong>${ENVIRONMENT}</strong></p>
-                <p>This application is securely running inside an isolated Docker container!</p>
+                <p>If you're seeing this, the Docker container port mapping worked!</p>
             </div>
         </body>
         </html>
     `);
 });
 
+// Kick off the server
 app.listen(PORT, () => {
-    console.log(`🐳 ${APP_NAME} running in ${ENVIRONMENT} mode on port ${PORT}`);
+    console.log(`🐳 [${ENVIRONMENT}] ${APP_NAME} is listening on port ${PORT}...`);
 });
