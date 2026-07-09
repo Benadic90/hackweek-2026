@@ -1,3 +1,8 @@
+/* 
+  CSS Art Festival - Pikachu
+  Hand-coded completely from scratch without generators.
+  Uses absolute positioning, border-radius, and keyframe animations.
+*/
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@900&display=swap');
 
 :root {
