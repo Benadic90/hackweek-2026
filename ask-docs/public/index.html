@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
+    <title>Ask Your Documents (Local RAG)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar: Uploads and Document list -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <span>DocAsk</span>
+                </div>
+            </div>
+
+            <div class="upload-zone" id="drop-zone">
+                <input type="file" id="file-input" multiple accept=".pdf,.txt" hidden>
+                <div class="upload-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                </div>
+                <p>Drag & Drop PDFs</p>
+                <span class="upload-sub">or click to browse</span>
+            </div>
+            
+            <div id="upload-status" class="status-msg"></div>
+
+            <div class="doc-list-section">
+                <div class="section-label">Active Documents</div>
+                <div id="doc-list" class="doc-list">
+                    <!-- Loaded docs will appear here -->
+                    <div class="empty-state">No documents uploaded yet.</div>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <button id="clear-db-btn" class="secondary-btn">Clear Database</button>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-area">
+            <div class="chat-messages" id="messages">
+                <div class="welcome">
+                    <div class="welcome-icon">📚</div>
+                    <h2>Ask Your Documents</h2>
+                    <p>Upload PDFs or text files on the left, then ask questions about them. The AI uses local embeddings and Ollama to find answers instantly.</p>
+                </div>
+            </div>
+
+            <div class="chat-input-wrap">
+                <div class="input-container">
+                    <textarea id="user-input" placeholder="Ask a question based on the uploaded documents..." rows="1"></textarea>
+                    <button id="send-btn" class="send-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
