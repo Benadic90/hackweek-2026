@@ -406,15 +406,6 @@ body {
   z-index: 1;
   transform-origin: bottom left;
   animation: wag 4s ease-in-out infinite;
-  /* Use a 4-way drop-shadow to create a flawless black outline around the combined shape */
-  filter: drop-shadow(4px 0 0 var(--black)) 
-          drop-shadow(-4px 0 0 var(--black)) 
-          drop-shadow(0 4px 0 var(--black)) 
-          drop-shadow(0 -4px 0 var(--black))
-          drop-shadow(3px 3px 0 var(--black))
-          drop-shadow(-3px -3px 0 var(--black))
-          drop-shadow(3px -3px 0 var(--black))
-          drop-shadow(-3px 3px 0 var(--black));
 }
 
 @keyframes wag {
@@ -425,45 +416,50 @@ body {
 .tail div {
   position: absolute;
   background: var(--yellow);
-  /* No borders on individual segments! The drop-shadow handles the outline perfectly */
+  border: 4px solid var(--black);
 }
 
 /* Base brown part */
 .tail .t1 {
   bottom: 0;
   left: 20px;
-  width: 35px;
-  height: 70px;
+  width: 30px;
+  height: 60px;
   background: var(--brown);
-  transform: skewX(-15deg);
+  transform: skewX(-20deg);
+  border-bottom: none;
 }
 
 .tail .t2 {
-  bottom: 50px;
-  left: 0px;
-  width: 70px;
-  height: 40px;
+  bottom: 48px;
+  left: 8px;
+  width: 60px;
+  height: 35px;
+  border-right: none;
 }
 
 .tail .t3 {
   bottom: 70px;
-  left: 35px;
-  width: 50px;
-  height: 80px;
+  left: 38px;
+  width: 40px;
+  height: 70px;
+  border-bottom: none;
 }
 
 .tail .t4 {
-  bottom: 130px;
-  left: 0px;
-  width: 100px;
-  height: 50px;
+  bottom: 128px;
+  left: 10px;
+  width: 90px;
+  height: 45px;
+  border-right: none;
 }
 
 .tail .t5 {
   bottom: 160px;
   left: 70px;
-  width: 80px;
-  height: 130px;
+  width: 70px;
+  height: 120px;
+  border-bottom: none;
   border-radius: 10px 10px 0 0;
 }
 
