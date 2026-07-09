@@ -59,7 +59,7 @@ app.get('/', (req, res) => {
                 <h1>${APP_NAME}</h1>
                 <p>Status: <span class="badge">Running Perfectly</span></p>
                 <p>Environment: <strong>${ENVIRONMENT}</strong></p>
-                <p>If you're seeing this, the Docker container port mapping worked!</p>
+                <p>I am WhiteWitch</p>
             </div>
         </body>
         </html>
