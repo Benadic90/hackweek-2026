@@ -4,31 +4,47 @@
   <meta charset="UTF-8">
   <title>Storage Explorer</title>
   <link rel="stylesheet" href="popup.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="header">
-    <h1>Storage Explorer</h1>
-    <input type="text" id="searchInput" placeholder="Search keys, values, or types..." autocomplete="off">
+    <div class="header-title">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+      <h1>Storage Explorer</h1>
+    </div>
+    <div class="search-wrapper">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="searchInput" placeholder="Search keys, values, or types..." autocomplete="off">
+    </div>
   </div>
   
   <div class="filters">
-    <label><input type="checkbox" id="filter-local" checked> Local Storage</label>
-    <label><input type="checkbox" id="filter-session" checked> Session Storage</label>
-    <label><input type="checkbox" id="filter-cookies" checked> Cookies</label>
+    <label class="checkbox-container">
+      <input type="checkbox" id="filter-local" checked>
+      <span class="checkmark local-check"></span> Local
+    </label>
+    <label class="checkbox-container">
+      <input type="checkbox" id="filter-session" checked>
+      <span class="checkmark session-check"></span> Session
+    </label>
+    <label class="checkbox-container">
+      <input type="checkbox" id="filter-cookies" checked>
+      <span class="checkmark cookie-check"></span> Cookies
+    </label>
   </div>
 
   <div class="table-container">
     <table id="storageTable">
       <thead>
         <tr>
-          <th>Type</th>
-          <th>Key</th>
-          <th>Value</th>
-          <th>Size</th>
+          <th style="width: 25%">Type</th>
+          <th style="width: 30%">Key</th>
+          <th style="width: 35%">Value</th>
+          <th style="width: 10%">Size</th>
         </tr>
       </thead>
       <tbody id="tableBody">
-        <!-- Rows will be injected here by JS -->
+        <!-- Rows injected by JS -->
       </tbody>
     </table>
   </div>

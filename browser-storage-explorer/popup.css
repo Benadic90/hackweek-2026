@@ -1,49 +1,107 @@
+:root {
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --primary: #3b82f6;
+  --local-color: #10b981;
+  --session-color: #f59e0b;
+  --cookie-color: #8b5cf6;
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', -apple-system, sans-serif;
   margin: 0;
   padding: 0;
-  width: 550px;
-  background-color: #f8fafc;
-  color: #1e293b;
+  width: 600px;
+  background-color: var(--bg-main);
+  color: var(--text-main);
 }
 
 .header {
-  background-color: #2563eb;
-  padding: 15px 20px;
-  color: white;
+  background-color: var(--bg-card);
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary);
 }
 
 .header h1 {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
+  color: var(--text-main);
+}
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 #searchInput {
   width: 100%;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 6px;
+  padding: 10px 10px 10px 36px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
   font-size: 0.9rem;
   box-sizing: border-box;
+  background-color: var(--bg-main);
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+#searchInput:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background-color: var(--bg-card);
 }
 
 .filters {
   display: flex;
-  gap: 15px;
-  padding: 12px 20px;
-  background: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
+  gap: 20px;
+  padding: 12px 24px;
+  background: var(--bg-main);
+  border-bottom: 1px solid var(--border-color);
   font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
 }
 
 .table-container {
-  max-height: 400px;
+  max-height: 420px;
   overflow-y: auto;
+  background: var(--bg-card);
 }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-main); }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
 table {
   width: 100%;
@@ -52,42 +110,55 @@ table {
 }
 
 th {
-  background: #f1f5f9;
+  background: var(--bg-main);
   text-align: left;
-  padding: 10px;
+  padding: 12px 24px;
   font-weight: 600;
+  color: var(--text-muted);
   position: sticky;
   top: 0;
-  border-bottom: 1px solid #cbd5e1;
+  border-bottom: 1px solid var(--border-color);
+  z-index: 10;
 }
 
 td {
-  padding: 10px;
-  border-bottom: 1px solid #e2e8f0;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--border-color);
   word-break: break-all;
-  max-width: 200px;
+  vertical-align: top;
+  color: var(--text-main);
+}
+
+td:nth-child(2) {
+  font-weight: 500;
+  color: #334155;
+}
+
+td:nth-child(3) {
+  color: var(--text-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8rem;
 }
 
 tr:hover {
-  background-color: #f1f5f9;
+  background-color: #f8fafc;
 }
 
 .type-badge {
-  display: inline-block;
-  padding: 3px 6px;
-  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 6px;
   font-size: 0.75rem;
   font-weight: 600;
-  color: white;
 }
 
-.type-local { background: #10b981; }
-.type-session { background: #f59e0b; }
-.type-cookie { background: #8b5cf6; }
+.type-local { background: rgba(16, 185, 129, 0.1); color: var(--local-color); border: 1px solid rgba(16, 185, 129, 0.2); }
+.type-session { background: rgba(245, 158, 11, 0.1); color: var(--session-color); border: 1px solid rgba(245, 158, 11, 0.2); }
+.type-cookie { background: rgba(139, 92, 246, 0.1); color: var(--cookie-color); border: 1px solid rgba(139, 92, 246, 0.2); }
 
 .empty-state {
   text-align: center;
-  padding: 30px;
-  color: #64748b;
-  font-style: italic;
+  padding: 40px 20px;
+  color: var(--text-muted);
 }
