@@ -100,9 +100,9 @@ body {
 /* Ears */
 .ear {
   position: absolute;
-  top: -40px;
+  top: -110px; /* Moved up to the top of the head */
   width: 65px;
-  height: 170px;
+  height: 150px;
   background: var(--yellow);
   border: 4px solid var(--black);
   z-index: -1;
@@ -110,17 +110,17 @@ body {
 }
 
 .ear.left {
-  left: -10px;
+  left: 20px;
   border-radius: 50% 50% 10% 10% / 80% 80% 10% 10%;
-  transform-origin: bottom right;
+  transform-origin: bottom center;
   transform: rotate(-35deg);
   animation: twitchLeft 5s infinite;
 }
 
 .ear.right {
-  right: -10px;
+  right: 20px;
   border-radius: 50% 50% 10% 10% / 80% 80% 10% 10%;
-  transform-origin: bottom left;
+  transform-origin: bottom center;
   transform: rotate(35deg);
   animation: twitchRight 6s infinite;
 }
