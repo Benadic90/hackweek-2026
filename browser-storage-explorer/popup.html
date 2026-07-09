@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Storage Explorer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="header">
+    <h1>Storage Explorer</h1>
+    <input type="text" id="searchInput" placeholder="Search keys, values, or types..." autocomplete="off">
+  </div>
+  
+  <div class="filters">
+    <label><input type="checkbox" id="filter-local" checked> Local Storage</label>
+    <label><input type="checkbox" id="filter-session" checked> Session Storage</label>
+    <label><input type="checkbox" id="filter-cookies" checked> Cookies</label>
+  </div>
+
+  <div class="table-container">
+    <table id="storageTable">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Key</th>
+          <th>Value</th>
+          <th>Size</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <!-- Rows will be injected here by JS -->
+      </tbody>
+    </table>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

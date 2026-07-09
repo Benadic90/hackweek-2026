@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Browser Storage Explorer",
+  "version": "1.0",
+  "description": "Explore and manage client-side storage (localStorage, sessionStorage, cookies) for any website.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "cookies"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Storage Explorer"
+  }
+}
