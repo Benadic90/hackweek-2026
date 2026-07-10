@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duplicate Image Finder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Duplicate Image Finder</h1>
+            <p>Upload a batch of images to instantly find exact duplicates or visually similar variations using perceptual hashing.</p>
+        </header>
+
+        <div class="upload-area" id="drop-zone">
+            <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <h2>Drag & Drop images here</h2>
+            <p>or click to browse files (JPEG, PNG, WebP)</p>
+            <input type="file" id="file-input" multiple accept="image/*" hidden>
+        </div>
+
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <p>Analyzing pixels and generating perceptual hashes...</p>
+        </div>
+
+        <div id="results-container" class="hidden">
+            <div class="results-header">
+                <h2>Analysis Results</h2>
+                <button id="reset-btn" class="btn-secondary">Upload New Batch</button>
+            </div>
+            
+            <div id="results-grid" class="results-grid">
+                <!-- Results will be injected here via JS -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
