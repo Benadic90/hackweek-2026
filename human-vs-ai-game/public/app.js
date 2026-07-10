@@ -1,4 +1,22 @@
-// Game Content Database
+/**
+ * @fileoverview Frontend Game Engine for Human vs AI Detector
+ * 
+ * This module manages the state machine, DOM updates, and API interactions
+ * for the core gameplay loop. It dynamically injects content and validates user guesses.
+ */
+
+/**
+ * @typedef {Object} GameItem
+ * @property {'text'|'code'} type - The format of the content snippet.
+ * @property {string} content - The actual text or code snippet to be analyzed.
+ * @property {'human'|'ai'} author - The true origin of the content.
+ * @property {string} explanation - Educational feedback explaining the psychological or technical tells.
+ */
+
+/**
+ * Static database containing the curated game levels.
+ * @type {Array<GameItem>}
+ */
 const database = [
     {
         type: 'text',
