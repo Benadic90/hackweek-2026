@@ -106,11 +106,17 @@ header p {
     to { transform: rotate(360deg); }
 }
 
-/* Workspace */
+/* Workspace Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 #workspace {
     display: flex;
     flex-direction: column;
     gap: 32px;
+    animation: fadeIn 0.4s ease-out forwards;
 }
 
 .controls-panel {
@@ -131,13 +137,36 @@ header p {
 
 .slider-container label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     font-weight: 500;
 }
 
+/* Premium Custom Range Slider */
 #quality-slider {
+    -webkit-appearance: none;
     width: 100%;
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+#quality-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary);
     cursor: pointer;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+    transition: all 0.2s ease;
+}
+
+#quality-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.3);
 }
 
 .action-buttons {
@@ -149,33 +178,37 @@ header p {
     background-color: var(--primary);
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 24px;
     border-radius: 6px;
     font-size: 0.95rem;
     font-weight: 500;
     cursor: pointer;
     text-decoration: none;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
 }
 
 .btn-primary:hover {
     background-color: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px -1px rgba(59, 130, 246, 0.3);
 }
 
 .btn-secondary {
     background-color: white;
     color: var(--text-main);
     border: 1px solid var(--border);
-    padding: 10px 20px;
+    padding: 10px 24px;
     border-radius: 6px;
     font-size: 0.95rem;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
 }
 
 .btn-secondary:hover {
     background-color: var(--bg-main);
+    border-color: #cbd5e1;
 }
 
 .metrics-board {
@@ -191,6 +224,12 @@ header p {
     padding: 16px;
     text-align: center;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.05);
 }
 
 .metric-card h4 {
@@ -223,6 +262,12 @@ header p {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+.image-box:hover {
+    transform: scale(1.005);
 }
 
 .image-header {
@@ -243,9 +288,10 @@ header p {
 
 .badge {
     padding: 4px 8px;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 0.75rem;
     font-weight: 600;
     background: #fee2e2;
     color: var(--danger);
+    box-shadow: inset 0 0 0 1px rgba(239, 68, 68, 0.2);
 }
