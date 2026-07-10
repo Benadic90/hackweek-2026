@@ -1,3 +1,4 @@
+// --- DOM Element References ---
 const dropZone = document.getElementById('drop-zone');
 const fileInput = document.getElementById('file-input');
 const loading = document.getElementById('loading');
@@ -17,10 +18,11 @@ const previewOriginal = document.getElementById('preview-original');
 const previewCompressed = document.getElementById('preview-compressed');
 const lossBadge = document.getElementById('loss-badge');
 
+// --- State Variables ---
 let currentFile = null;
 let compressionTimeout = null;
 
-// --- Upload Handlers ---
+// --- Drag & Drop Handlers ---
 dropZone.addEventListener('click', () => fileInput.click());
 
 dropZone.addEventListener('dragover', (e) => {
@@ -46,32 +48,40 @@ fileInput.addEventListener('change', (e) => {
     }
 });
 
+/**
+ * Initializes the workspace when a valid file is loaded.
+ */
 function handleFile(file) {
     currentFile = file;
     dropZone.classList.add('hidden');
     
-    // Set slider to default 80
+    // Set slider back to default balanced state (80%)
     qualitySlider.value = 80;
     qualityVal.textContent = 80;
     
     processCompression();
 }
 
-// --- Slider Handling (Debounced) ---
+// --- Dynamic Quality Slider ---
 qualitySlider.addEventListener('input', (e) => {
+    // Instantly update the visual label
     qualityVal.textContent = e.target.value;
     
-    // Debounce the server request so we don't spam the API while dragging
+    // Debounce the network request. 
+    // This prevents API flooding while the user is actively dragging the slider.
     clearTimeout(compressionTimeout);
     compressionTimeout = setTimeout(() => {
         processCompression();
-    }, 300); // Wait 300ms after user stops moving slider
+    }, 300); // Wait 300ms after the slider stops moving
 });
 
-// --- API Request ---
+/**
+ * Sends the current file and target quality to the backend API for compression.
+ */
 async function processCompression() {
     if (!currentFile) return;
 
+    // Show loading spinner if this is the very first upload
     if (workspace.classList.contains('hidden')) {
         loading.classList.remove('hidden');
     }
@@ -89,20 +99,23 @@ async function processCompression() {
         const data = await response.json();
         
         if (!response.ok) {
-            throw new Error(data.error || 'Server error during compression.');
+            throw new Error(data.error || 'Server error during compression pipeline.');
         }
 
         updateUI(data);
         
     } catch (error) {
         alert(error.message);
+        // Reset to initial state on failure
         dropZone.classList.remove('hidden');
     } finally {
         loading.classList.add('hidden');
     }
 }
 
-// --- UI Updates ---
+/**
+ * Utility to format raw byte values into human-readable sizes (KB, MB).
+ */
 function formatBytes(bytes) {
     if (bytes === 0) return '0 B';
     const k = 1024;
@@ -111,30 +124,37 @@ function formatBytes(bytes) {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
+/**
+ * Re-renders the metrics board and preview images with the fresh data payload.
+ */
 function updateUI(data) {
+    // Unhide the workspace if it was hidden
     workspace.classList.remove('hidden');
 
-    // Update Metrics
+    // Update real-time metrics
     mOriginalSize.textContent = formatBytes(data.originalSize);
     mCompressedSize.textContent = formatBytes(data.compressedSize);
     mRatio.textContent = `${data.ratio}%`;
     mDimensions.textContent = data.dimensions;
 
-    // Update Loss Badge
+    // Update the warning badge for quality loss
     lossBadge.textContent = `${data.qualityLoss}% Est. Loss`;
 
-    // Update Images
+    // Render the base64 payloads to the DOM
     previewOriginal.src = data.originalDataUrl;
     previewCompressed.src = data.compressedDataUrl;
 
-    // Setup Download link
+    // Attach the compressed payload to the download button
     downloadBtn.href = data.compressedDataUrl;
 }
 
-// --- Reset UI ---
+// --- Reset Mechanism ---
 resetBtn.addEventListener('click', () => {
+    // Purge state and clear inputs
     currentFile = null;
     fileInput.value = '';
+    
+    // Reset view
     workspace.classList.add('hidden');
     dropZone.classList.remove('hidden');
 });
