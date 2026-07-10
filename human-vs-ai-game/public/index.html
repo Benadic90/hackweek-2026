@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human vs AI Detector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header & Stats -->
+        <header>
+            <div class="logo">
+                <span class="highlight">Human</span> vs <span class="highlight-ai">AI</span>
+            </div>
+            <div class="stats-bar hidden" id="stats-bar">
+                <div class="stat-pill">Score: <span id="score-display">0</span></div>
+                <div class="stat-pill">Lives: <span id="lives-display">❤️❤️❤️</span></div>
+            </div>
+        </header>
+
+        <!-- Main Game Area -->
+        <main>
+            <!-- Start Screen -->
+            <div id="screen-start" class="screen active">
+                <h1>Can you spot the machine?</h1>
+                <p>You will be shown text, code, or art. Guess if it was created by a Human or an AI. 3 strikes and you're out!</p>
+                <button class="btn btn-primary" id="btn-start">Start Game</button>
+            </div>
+
+            <!-- Gameplay Screen -->
+            <div id="screen-game" class="screen hidden">
+                <div class="progress-indicator">Round <span id="round-display">1</span></div>
+                
+                <div class="content-card" id="content-card">
+                    <!-- Dynamic Content Injected Here -->
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-human" id="btn-guess-human">👨‍💻 Human</button>
+                    <button class="btn btn-ai" id="btn-guess-ai">🤖 AI</button>
+                </div>
+            </div>
+
+            <!-- Reveal / Explanation Screen -->
+            <div id="screen-reveal" class="screen hidden">
+                <h2 id="reveal-title">Correct!</h2>
+                <div class="reveal-badge" id="reveal-badge">Created by AI</div>
+                <p class="explanation" id="reveal-explanation">The AI generated this code using generic variables.</p>
+                <button class="btn btn-primary" id="btn-next">Next Round</button>
+            </div>
+
+            <!-- Game Over / Leaderboard Screen -->
+            <div id="screen-end" class="screen hidden">
+                <h2>Game Over!</h2>
+                <p>Final Score: <span id="final-score" class="highlight-score">0</span></p>
+                
+                <div class="leaderboard-section">
+                    <h3>Top Detectors</h3>
+                    <ul id="leaderboard-list" class="leaderboard-list">
+                        <!-- Leaderboard injected here -->
+                    </ul>
+                </div>
+                
+                <div class="submit-score" id="submit-section">
+                    <input type="text" id="player-name" placeholder="Enter your name" maxlength="15">
+                    <button class="btn btn-primary" id="btn-submit">Submit Score</button>
+                </div>
+                
+                <button class="btn btn-secondary mt-4" id="btn-restart">Play Again</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
