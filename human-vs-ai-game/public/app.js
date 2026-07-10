@@ -144,7 +144,7 @@ function handleGuess(guess) {
     updateStats();
     
     revealBadge.textContent = currentItem.author === 'human' ? 'Created by Human' : 'Created by AI';
-    revealBadge.className = \`reveal-badge badge-\${currentItem.author}\`;
+    revealBadge.className = `reveal-badge badge-${currentItem.author}`;
     
     revealExplanation.textContent = currentItem.explanation;
 }
