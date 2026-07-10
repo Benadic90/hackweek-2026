@@ -1,9 +1,9 @@
 module.exports = [
     {
-        files: ["**/*.js"],
+        files: ['**/*.js'],
         rules: {
-            "semi": ["error", "always"],
-            "quotes": ["error", "single"]
+            'semi': ['error', 'always'],
+            'quotes': ['error', 'single']
         }
     }
 ];
