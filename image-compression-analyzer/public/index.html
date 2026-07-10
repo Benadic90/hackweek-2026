@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Compression Analyzer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Image Compression Analyzer</h1>
+            <p>Upload an image and adjust the compression quality to analyze the file size savings and visual artifacts in real-time.</p>
+        </header>
+
+        <!-- Upload Area -->
+        <div class="upload-area" id="drop-zone">
+            <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <h2>Drag & Drop an image here</h2>
+            <p>or click to browse files (JPEG, PNG, WebP)</p>
+            <input type="file" id="file-input" accept="image/*" hidden>
+        </div>
+
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <p>Analyzing and compressing...</p>
+        </div>
+
+        <!-- Main Workspace -->
+        <div id="workspace" class="hidden">
+            
+            <!-- Controls -->
+            <div class="controls-panel">
+                <div class="slider-container">
+                    <label for="quality-slider">Compression Quality: <span id="quality-val">80</span>%</label>
+                    <input type="range" id="quality-slider" min="1" max="100" value="80">
+                </div>
+                <div class="action-buttons">
+                    <a id="download-btn" class="btn-primary" download="compressed_image.jpg">Download Compressed</a>
+                    <button id="reset-btn" class="btn-secondary">Upload New</button>
+                </div>
+            </div>
+
+            <!-- Metrics Board -->
+            <div class="metrics-board">
+                <div class="metric-card">
+                    <h4>Original Size</h4>
+                    <p id="m-original-size">0 KB</p>
+                </div>
+                <div class="metric-card">
+                    <h4>Compressed Size</h4>
+                    <p id="m-compressed-size" class="highlight">0 KB</p>
+                </div>
+                <div class="metric-card">
+                    <h4>Saved Space</h4>
+                    <p id="m-ratio" class="highlight-green">0%</p>
+                </div>
+                <div class="metric-card">
+                    <h4>Dimensions</h4>
+                    <p id="m-dimensions">0 x 0</p>
+                </div>
+            </div>
+
+            <!-- Side-by-Side Comparison -->
+            <div class="comparison-container">
+                <div class="image-box">
+                    <div class="image-header">Original</div>
+                    <img id="preview-original" alt="Original Image">
+                </div>
+                <div class="image-box">
+                    <div class="image-header">Compressed <span id="loss-badge" class="badge"></span></div>
+                    <img id="preview-compressed" alt="Compressed Image">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
